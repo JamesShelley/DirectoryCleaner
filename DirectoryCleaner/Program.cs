@@ -9,8 +9,10 @@ namespace DirectoryCleaner
         {
             try
             {
+                Console.WriteLine("Please input a directory to check: ");
+                string userInput = Console.ReadLine();
                 // Only get files that begin with the letter "c".
-                string[] dirs = Directory.GetFiles(@"c:\users\james\Desktop", "d*");
+                string[] dirs = Directory.GetFiles(userInput, "d*");
                 Console.WriteLine("The number of files starting with c is {0}.", dirs.Length);
                 foreach (string dir in dirs)
                 {
