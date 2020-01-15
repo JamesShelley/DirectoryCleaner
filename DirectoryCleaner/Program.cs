@@ -5,29 +5,14 @@ namespace DirectoryCleaner
 {
     class Program
     {
+
+
         public static void Main(string[] args)
         {
-            /*
-             *  try
-             {
-                 Console.WriteLine("Please input a directory to check:");
-                 string userInput = Console.ReadLine();
-                 string[] dirs = Directory.GetFiles(userInput); 
-                 //string[] dirs = Directory.GetFiles(userInput, "c*");
-                 Console.WriteLine("The number of files starting with c is {0}.", dirs.Length);
-                 foreach (string dir in dirs)
-                 {
-                     DateTime lastAccessTime = Directory.GetLastAccessTime(dir);
-                     long fileSize = dir.Length;
-                     Console.WriteLine("File: " + dir + ", Last Access Time: " + lastAccessTime + ", File Size: " + fileSize);
-                 }
-             }
-             catch (Exception e)
-             {
-                 Console.WriteLine("The process failed: {0}", e.ToString());
-             }
-             Console.WriteLine("------------\n");
-             */
+            int largestWidth = Console.LargestWindowWidth - 50;
+            int largestHeight = Console.LargestWindowHeight - 10;
+
+            Console.SetWindowSize(largestWidth, largestHeight);
             Console.WriteLine("Please input a directory to check:");
             string userInput = Console.ReadLine();
             GetSubDirectories(userInput);
@@ -56,7 +41,6 @@ namespace DirectoryCleaner
             {
                 LoadSubDirs(subdirectory);
             }
-
         }
 
         private static void getFilesInDirectory(string currentDir)
@@ -64,8 +48,7 @@ namespace DirectoryCleaner
             string[] filesInDir = Directory.GetFiles(currentDir);
             foreach(string file in filesInDir)
             {
-//                Console.WriteLine("\tFile in: " + currentDir + " is: " + file);
-                Console.WriteLine("\tFile located: "  + file);
+                Console.WriteLine("\tFile located: "  + file + ", Length in Bytes: " + file.Length);
             }
         }
     }
