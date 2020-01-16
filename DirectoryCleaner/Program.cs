@@ -50,13 +50,18 @@ namespace DirectoryCleaner
         private static void getFilesInDirectory(string currentDir)
         {
             string[] filesInDir = Directory.GetFiles(currentDir);
-            foreach(string file in filesInDir)
+            foreach (string file in filesInDir)
             {
-                Console.WriteLine("\tFile located: "  + file + ", Length in Bytes: " + file.Length);
-                using (System.IO.StreamWriter addToFile = new System.IO.StreamWriter(@outputFileDirectory, true))
+                Console.WriteLine("\tFile located: " + file + ", Length in Bytes: " + file.Length);
+                try { 
+                using (System.IO.StreamWriter addToFile = new System.IO.StreamWriter(outputFileDirectory, true))
                 {
                     addToFile.WriteLine("\tFile located: " + file + ", Length in Bytes: " + file.Length);
                 }
+            }catch (System.IO.IOException e) {
+                    Console.WriteLine("Error: the output file might be in use by another program?");
+
+               }
             }
         }
 
@@ -72,7 +77,8 @@ namespace DirectoryCleaner
                 {
                     // Try to create the directory.
                     DirectoryInfo di = Directory.CreateDirectory(path);
-                    Console.WriteLine("The directory was created successfully at {0}.", Directory.GetCreationTime(path));
+                    // Create the file, or overwrite if the file exists.
+                    File.Create(outputFileDirectory);
                 }
             }
             catch (Exception e)
@@ -80,13 +86,7 @@ namespace DirectoryCleaner
                 Console.WriteLine("The process failed: {0}", e.ToString());
             }
 
-            // Create the file, or overwrite if the file exists.
-            using (FileStream fs = File.Create(outputFileDirectory))
-            {
-                byte[] info = new UTF8Encoding(true).GetBytes("File Cleaner Result");
-                // Add some information to the file.
-                fs.Write(info, 0, info.Length);
-            }
+       
 
         }
     }
